@@ -7,4 +7,7 @@ main() ->
     do_math(5, 4).
 
 do_math(A, B) ->
-    math:log10(1000).
+    math:sqrt(64).
+
+% sin, cos, tan, asin, acos, atan, sinh, cosh, tanh, asinh,
+	% acosh, atanh
