@@ -4,10 +4,23 @@
 -export([main/0]).
 
 main() ->
-    do_math(5, 4).
+    what_grade(10).
 
-do_math(A, B) ->
-    math:sqrt(64).
+preschool() ->
+    'Go to preschool'.
+
+kindergarten() ->
+    'Go to kindergarten'.
+
+grade_school() ->
+    'Go to grade grade school'.
+
+what_grade(X) ->
+    if
+        X < 5 -> preschool();
+        X == 5 -> kindergarten();
+        X > 5 -> grade_school()
+    end.
 
 % sin, cos, tan, asin, acos, atan, sinh, cosh, tanh, asinh,
 	% acosh, atanh
