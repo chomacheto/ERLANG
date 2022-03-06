@@ -4,23 +4,30 @@
 -export([main/0]).
 
 main() ->
-    what_grade(10).
+    string_stuff().
 
-preschool() ->
-    'Go to preschool'.
+string_stuff() ->
+    Str1 = "Random string",
+    Str2 = "Another string",
 
-kindergarten() ->
-    'Go to kindergarten'.
+    io:fwrite("String : ~p ~p\n", [Str1, Str2]),
 
-grade_school() ->
-    'Go to grade grade school'.
+    Str3 = io_lib:format("It's a ~s and ~s\n", [Str1, Str2]),
+    io:fwrite(Str3),
 
-what_grade(X) ->
-    if
-        X < 5 -> preschool();
-        X == 5 -> kindergarten();
-        X > 5 -> grade_school()
-    end.
+    len(Str3),
 
-% sin, cos, tan, asin, acos, atan, sinh, cosh, tanh, asinh,
-	% acosh, atanh
+    Str4 = concat(Str1, Str2),
+    Str4,
+
+    CharIndex = chr(Str4, $r),
+    CharIndex,
+
+    Str5 = substr(Str4, 8, 6),
+    Str5,
+
+    StrIndex = str(Str4, Str2),
+    StrIndex,
+
+    to_upper(Str1),
+    to_lower(Str2).
