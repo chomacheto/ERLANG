@@ -1,25 +1,61 @@
+% -module(mylists).
+
+% -export([main/0]).
+
+% main() ->
+%     list_stuff().
+
+% list_stuff() ->
+%     List1 = [1, 2, 3],
+%     List2 = [4, 5, 6],
+
+%     List3 = List1 ++ List2,
+%     List3,
+
+%     List4 = List3 -- List1,
+%     List4,
+
+%     hd(List4),
+%     tl(List4),
+
+%     List5 = [3 | List4],
+%     List5,
+
+%     [Head | Tail] = List5,
+%     Head.
+
 -module(mylists).
 
--export([main/0]).
+-compile(export_all).
+%% Some definitions copied from lists.erl
+%% for pedagogic purposes
 
-main() ->
-    list_stuff().
+%% (1)
+map(_, []) -> [];
+%% (2)
+map(F, [H | T]) -> [F(H) | map(F, T)].
 
-list_stuff() ->
-    List1 = [1, 2, 3],
-    List2 = [4, 5, 6],
+member(H, [H | _]) -> true;
+member(H, [_ | T]) -> member(H, T);
+member(_, []) -> false.
 
-    List3 = List1 ++ List2,
-    List3,
+%% (3)
+sum([H | T]) -> H + sum(T);
+%% (4)
+sum([]) -> 0.
 
-    List4 = List3 -- List1,
-    List4,
+partition(Pred, L) -> partition(Pred, L, [], []).
 
-    hd(List4),
-    tl(List4),
+partition(Pred, [H | T], Ts, Fs) ->
+    case Pred(H) of
+        true -> partition(Pred, T, [H | Ts], Fs);
+        false -> partition(Pred, T, Ts, [H | Fs])
+    end;
+partition(_, [], Ts, Fs) ->
+    {reverse(Ts), reverse(Fs)}.
+%END:partition
 
-    List5 = [3 | List4],
-    List5,
+reverse(L) -> reverse(L, []).
 
-    [Head | Tail] = List5,
-    Head.
+reverse([H | T], L) -> reverse(T, [H | L]);
+reverse([], L) -> L.
