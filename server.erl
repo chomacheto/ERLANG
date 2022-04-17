@@ -1,14 +1,18 @@
 -module(server).
 -export([loop/1, start/1]).
 
-start({N, Parent}) ->
-    spawn(server, loop, [{N, Parent}]).
+start({N}) ->
+    spawn(server, loop, [{N, self()}]) ! create_child,
+    receive
+        {getPid, Any} -> io:format("Any:~p~n", [Any])
+    end.
 
 %P1(P0) -> P2(P1) -> .....PN(PN-1)
 
 % 1. Create
 
-loop({0, _Parent}) -> ok;
+loop({0, Parent}) -> Parent ! {getPid, Parent};
+
 
 loop({N, Parent}) ->
     %receive
@@ -28,9 +32,11 @@ loop({N, Parent}) ->
         {do, X} -> M = X*X,
                    io:format("Me:~p N:~p, M:~p~n", [self(), N, M]),
                    Parent ! {do, M};
+        {getPid, X} ->
+            Parent ! {getPid, X};
         Any -> Any
     end,
-    loop({N-1, Parent}).
+    loop({N, Parent}).
 
 
 % process id to variable
