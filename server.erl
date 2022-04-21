@@ -32,8 +32,8 @@ loop({N, Parent}) ->
         {do, X} -> M = X*X,
                    io:format("Me:~p N:~p, M:~p~n", [self(), N, M]),
                    Parent ! {do, M};
-        {getPid, X} ->
-            Parent ! {getPid, X};
+        {getPid, X} -> Parent ! {getPid, X};
+
         Any -> Any
     end,
     loop({N, Parent}).
