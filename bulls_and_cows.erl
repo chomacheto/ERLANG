@@ -1,7 +1,7 @@
 -module(bulls_and_cows).
 -export([generate_secret/0, score_guess/2, play/0]).
 
-% generate secret
+% gen secret
 
 generate_secret() -> generate_secret([], 4, lists:seq(1,9)).
 
@@ -11,27 +11,29 @@ generate_secret(Secret, N, Digits) ->
   Next = lists:nth(rand:uniform(length(Digits)), Digits),
   generate_secret(Secret ++ [Next], N - 1, Digits -- [Next]).
 
-% evaluate a guess
 
-score_guess(Secret, Guess)
-  when length(Secret) =/= length(Guess) -> throw(badguess);
-
-score_guess(Secret, Guess) ->
-  Bulls = count_bulls(Secret,Guess),
-  Cows = count_cows(Secret, Guess, Bulls),
-  [Bulls, Cows].
-
-% count bulls
-count_bulls(Secret, Guess) ->
-  length(lists:filter(fun(I) ->
-      lists:nth(I,Secret) == lists:nth(I,Guess) end,
-        lists:seq(1, length(Secret)))).
-
-% count cows
+  % count cows
 
 count_cows(Secret, Guess, Bulls) ->
-   length(lists:filter(fun(I) ->
-       lists:member(I, Guess) end, Secret)) - Bulls.
+    length(lists:filter(fun(I) ->
+        lists:member(I, Guess) end, Secret)) - Bulls.
+
+% count bulls
+
+count_bulls(Secret, Guess) ->
+    length(lists:filter(fun(I) ->
+    lists:nth(I,Secret) == lists:nth(I,Guess) end,
+    lists:seq(1, length(Secret)))).
+
+% eval guess
+
+score_guess(Secret, Guess)
+    when length(Secret) =/= length(Guess) -> throw(badguess);
+
+score_guess(Secret, Guess) ->
+    Bulls = count_bulls(Secret,Guess),
+    Cows = count_cows(Secret, Guess, Bulls),
+    [Bulls, Cows].
 
 % play a game
 
