@@ -12,7 +12,7 @@ loop(State) ->
     receive
 
         {Client, {mem_status}} -> Response = os:cmd("free"),
-                                  Client ! {self()< Response};
+                                  Client ! {self(), Response};
 
         {Client, {calc, X}} ->  Response = X*X,
                                 Client ! {self(), Response};
@@ -32,7 +32,7 @@ rpc(Server, Request) ->
     SyncPr = spawn(server2, rpc_receive, [Server]),
     io:format("SyncPr:~p~n", [SyncPr]),
     Server ! {SyncPr, Request},
-    io:format("Hello from client!").
+    io:format("Hello from client!~n").
 
 rpc_receive(Server) ->
     receive
