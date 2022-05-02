@@ -25,4 +25,4 @@ loop() ->
 
     loop().
 
-what is the actor model?
+%what is the actor model?

@@ -12,18 +12,19 @@ generate_secret(Secret, N, Digits) ->
   generate_secret(Secret ++ [Next], N - 1, Digits -- [Next]).
 
 
-  % count cows
 
-count_cows(Secret, Guess, Bulls) ->
-    length(lists:filter(fun(I) ->
-        lists:member(I, Guess) end, Secret)) - Bulls.
-
-% count bulls
+  % count bulls
 
 count_bulls(Secret, Guess) ->
     length(lists:filter(fun(I) ->
     lists:nth(I,Secret) == lists:nth(I,Guess) end,
     lists:seq(1, length(Secret)))).
+
+    % count cows
+
+count_cows(Secret, Guess, Bulls) ->
+    length(lists:filter(fun(I) ->
+        lists:member(I, Guess) end, Secret)) - Bulls.
 
 % eval guess
 
